@@ -27,12 +27,12 @@ internal class AdmobInterstatialAd: IInterstitalAd {
             AdRequest.Builder().build(),
             object : InterstitialAdLoadCallback() {
                 override fun onAdLoaded(ad: InterstitialAd) {
-                    Log.d(TAG, "Ad was loaded.")
+                    Log.d(Constraints.AdmobAdsTAG+"LoadInterstitalAd.onAdLoaded", "\n+++++++++++++++++\n"+"Ad was loaded."+"\n+++++++++++++++++\n")
                     interstitialAd = ad
                 }
 
                 override fun onAdFailedToLoad(adError: LoadAdError) {
-                    Log.d(TAG, adError.message)
+                    Log.d(Constraints.AdmobAdsTAG+"LoadInterstitalAd.onAdFailedToLoad", "\n+++++++++++++++++\n"+adError.message+"\n+++++++++++++++++\n")
                     null.also {
                         if (it != null) {
                             interstitialAd = it
@@ -53,7 +53,7 @@ internal class AdmobInterstatialAd: IInterstitalAd {
         interstitialAd?.fullScreenContentCallback =
             object : FullScreenContentCallback() {
                 override fun onAdDismissedFullScreenContent() {
-                    Log.d(Constraints.AdmobAdsTAG+":onAdDismissedFullScreenContent", "\nAd was dismissed.\n")
+                    Log.d(Constraints.AdmobAdsTAG+"onAdDismissedFullScreenContent", "\n+++++++++++\nAd was dismissed.\n+++++++++++\n")
 
                     null.also {
                         if (it != null) {
@@ -63,7 +63,7 @@ internal class AdmobInterstatialAd: IInterstitalAd {
                 }
 
                 override fun onAdFailedToShowFullScreenContent(adError: AdError) {
-                    Log.d(Constraints.AdmobAdsTAG+":onAdFailedToShowFullScreenContent", "\nAd failed to show.\n")
+                    Log.d(Constraints.AdmobAdsTAG+"onAdFailedToShowFullScreenContent", "\n+++++++++++++++++\nAd failed to show.\n++++++++++++++\n")
 
                     null.also {
                         if (it != null) {
@@ -73,15 +73,15 @@ internal class AdmobInterstatialAd: IInterstitalAd {
                 }
 
                 override fun onAdShowedFullScreenContent() {
-                    Log.d(Constraints.AdmobAdsTAG+":onAdShowedFullScreenContent", "\nAd showed fullscreen content.\n")
+                    Log.d(Constraints.AdmobAdsTAG+"onAdShowedFullScreenContent", "\n++++++++++++++\nAd showed fullscreen content.\n++++++++++++++\n")
                 }
 
                 override fun onAdImpression() {
-                    Log.d(Constraints.AdmobAdsTAG+":onAdImpression", "\nAd recorded an impression.\n")
+                    Log.d(Constraints.AdmobAdsTAG+"onAdImpression", "\n++++++++++++++\nAd recorded an impression.\n++++++++++++++\n")
                 }
 
                 override fun onAdClicked() {
-                    Log.d(Constraints.AdmobAdsTAG+":onAdClicked", "\nAd was clicked.\n")
+                    Log.d(Constraints.AdmobAdsTAG+"onAdClicked", "\n++++++++++++++\nAd was clicked.\n++++++++++++++\n")
                 }
             }
     }
