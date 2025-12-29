@@ -10,14 +10,8 @@ import com.google.android.gms.ads.initialization.InitializationStatus
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener
 
 class AdmobAdsManager {
-constructor(context: Context){
-    MobileAds.initialize(context,object : OnInitializationCompleteListener{
+constructor(){
 
-        override fun onInitializationComplete(p0: InitializationStatus)
-        {
-            Log.d(Constraints.AdmobAdsTAG+"initialize.onInitializationComplete","\n\n\n___________Initialization Complete___________\n\n\n")
-        }
-    })
 }
     fun  BannerAdLoad(adBannerId:String,context: Context): AdView{
        var  admobAdBanner:AdmobAdBanner=AdmobAdBanner(adBannerId,context)
