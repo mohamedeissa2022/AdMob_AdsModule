@@ -33,6 +33,6 @@ class AdmobAdsManager {
     fun  ShowRewordedInterstatialAd(){
         AdsManager.ShowRewordedInterstitalAd(admobRewordedInterstatialAd)
     }
-    git tag v1.0.1
+
 
 }
