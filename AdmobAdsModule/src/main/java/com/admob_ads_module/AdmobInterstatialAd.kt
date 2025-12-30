@@ -16,7 +16,7 @@ internal class AdmobInterstatialAd: IInterstitalAd
 {
     private   var interstitialAd: InterstitialAd?=null
 
-    private lateinit var activity: Activity
+    private  var activity: Activity? =null
     private lateinit var AD_UNIT_ID: String
     constructor( ad_unit_id: String,activity: Activity){
         if(ad_unit_id.isEmpty())
@@ -28,7 +28,7 @@ internal class AdmobInterstatialAd: IInterstitalAd
     override fun LoadInterstitalAd()
     {
         InterstitialAd.load(
-            activity,
+            activity!!,
             AD_UNIT_ID,
             AdRequest.Builder().build(),
             object : InterstitialAdLoadCallback()
@@ -52,7 +52,19 @@ internal class AdmobInterstatialAd: IInterstitalAd
 
     override fun ShowInterstatialAd()
     {
-        interstitialAd?.show(activity)
+        if(interstitialAd==null)
+            return
+        if(activity!!.isFinishing || activity!!.isDestroyed){
+            Log.d("Ads", "Activity not valid")
+
+            return
+        }
+        activity!!.runOnUiThread {
+
+            interstitialAd?.show(activity!!)
+            interstitialAd=null
+
+        }
 
 
 
