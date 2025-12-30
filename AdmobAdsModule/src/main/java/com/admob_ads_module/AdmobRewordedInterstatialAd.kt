@@ -12,19 +12,23 @@ import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 
 internal class AdmobRewordedInterstatialAd : IRewordedInterstatialAd {
-   private lateinit var RewordedAd: RewardedAd
-    private lateinit var activity: Activity
+   private  var RewordedAd: RewardedAd?=null
+    private  var activity: Activity?
     private lateinit var AD_UNIT_ID: String
 
-    constructor(AD_UNIT_ID: String,activity: Activity) {
+    constructor(ad_unit_id: String,activity: Activity) {
+        if(ad_unit_id.isEmpty())
+            throw Exception("Ad Unit Id is Empty")
         this.activity = activity
-        this.AD_UNIT_ID = AD_UNIT_ID
+        this.AD_UNIT_ID = ad_unit_id
+
     }
 
 
     override fun LoadRewordedInterstatialAd() {
+        if(activity==null)return
         RewardedAd.load(
-            activity,
+            activity!!,
             AD_UNIT_ID,
             AdRequest.Builder().build(),
             object : RewardedAdLoadCallback() {
@@ -48,7 +52,8 @@ internal class AdmobRewordedInterstatialAd : IRewordedInterstatialAd {
     override fun ShowRewordedInterstatialAd() {
         if(activity==null)
             return
-        RewordedAd?.show(activity, object : OnUserEarnedRewardListener
+
+        RewordedAd?.show(activity!!, object : OnUserEarnedRewardListener
         {
             override fun onUserEarnedReward(rewardItem: RewardItem)
             {

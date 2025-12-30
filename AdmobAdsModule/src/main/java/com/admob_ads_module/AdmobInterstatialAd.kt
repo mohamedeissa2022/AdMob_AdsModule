@@ -12,65 +12,86 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 
-internal class AdmobInterstatialAd: IInterstitalAd {
- private  lateinit var interstitialAd: InterstitialAd
+internal class AdmobInterstatialAd: IInterstitalAd
+{
+    private   var interstitialAd: InterstitialAd?
+        get() {
+            TODO()
+        }
+        set(value) {}
     private lateinit var activity: Activity
     private lateinit var AD_UNIT_ID: String
-    constructor( AD_UNIT_ID: String,activity: Activity){
-        this.AD_UNIT_ID=AD_UNIT_ID
+    constructor( ad_unit_id: String,activity: Activity){
+        if(ad_unit_id.isEmpty())
+            throw Exception("Ad Unit Id is Empty")
+        this.AD_UNIT_ID=ad_unit_id
         this.activity=activity
+
     }
-    override fun LoadInterstitalAd() {
+    override fun LoadInterstitalAd()
+    {
         InterstitialAd.load(
             activity,
             AD_UNIT_ID,
             AdRequest.Builder().build(),
-            object : InterstitialAdLoadCallback() {
-                override fun onAdLoaded(ad: InterstitialAd) {
+            object : InterstitialAdLoadCallback()
+            {
+                override fun onAdLoaded(ad: InterstitialAd)
+                {
                     Log.d(Constraints.AdmobAdsTAG+"LoadInterstitalAd.onAdLoaded", "\n+++++++++++++++++\n"+"Ad was loaded."+"\n+++++++++++++++++\n")
                     interstitialAd = ad
+                    InterstatialAdCalBacksResult()
                 }
 
-                override fun onAdFailedToLoad(adError: LoadAdError) {
+                override fun onAdFailedToLoad(adError: LoadAdError)
+                {
                     Log.d(Constraints.AdmobAdsTAG+"LoadInterstitalAd.onAdFailedToLoad", "\n+++++++++++++++++\n"+adError.message+"\n+++++++++++++++++\n")
-                    null.also {
-                        if (it != null) {
-                            interstitialAd = it
-                        }
-                    }
+                    interstitialAd = null
                 }
             },
         )
-        InterstatialAdCalBacksResult()
+
     }
 
     override fun ShowInterstatialAd()
     {
-        if(activity!=null)
         interstitialAd?.show(activity)
+
+
+
     }
-   private fun  InterstatialAdCalBacksResult(){
-        interstitialAd?.fullScreenContentCallback =
-            object : FullScreenContentCallback() {
-                override fun onAdDismissedFullScreenContent() {
-                    Log.d(Constraints.AdmobAdsTAG+"onAdDismissedFullScreenContent", "\n+++++++++++\nAd was dismissed.\n+++++++++++\n")
+    private fun  InterstatialAdCalBacksResult()
+    {
 
-                    null.also {
-                        if (it != null) {
-                            interstitialAd = it
-                        }
-                    }
-                }
 
-                override fun onAdFailedToShowFullScreenContent(adError: AdError) {
-                    Log.d(Constraints.AdmobAdsTAG+"onAdFailedToShowFullScreenContent", "\n+++++++++++++++++\nAd failed to show.\n++++++++++++++\n")
 
-                    null.also {
-                        if (it != null) {
-                            interstitialAd = it
-                        }
-                    }
-                }
+       interstitialAd?.fullScreenContentCallback =
+           object : FullScreenContentCallback()
+           {
+               override fun onAdDismissedFullScreenContent()
+               {
+                   Log.d(
+                       Constraints.AdmobAdsTAG + "onAdDismissedFullScreenContent",
+                       "\n+++++++++++\nAd was dismissed.\n+++++++++++\n"
+                   )
+
+                   interstitialAd = null
+
+
+
+               }
+
+       override fun onAdFailedToShowFullScreenContent(adError: AdError)
+       {
+           Log.d(
+               Constraints.AdmobAdsTAG + "onAdFailedToShowFullScreenContent",
+               "\n+++++++++++++++++\nAd failed to show.\n++++++++++++++\n"
+           )
+           interstitialAd = null
+
+
+
+       }
 
                 override fun onAdShowedFullScreenContent() {
                     Log.d(Constraints.AdmobAdsTAG+"onAdShowedFullScreenContent", "\n++++++++++++++\nAd showed fullscreen content.\n++++++++++++++\n")
@@ -85,4 +106,6 @@ internal class AdmobInterstatialAd: IInterstitalAd {
                 }
             }
     }
-}
+    }
+
+
