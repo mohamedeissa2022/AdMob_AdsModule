@@ -14,11 +14,8 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 
 internal class AdmobInterstatialAd: IInterstitalAd
 {
-    private   var interstitialAd: InterstitialAd?
-        get() {
-            TODO()
-        }
-        set(value) {}
+    private   var interstitialAd: InterstitialAd?=null
+
     private lateinit var activity: Activity
     private lateinit var AD_UNIT_ID: String
     constructor( ad_unit_id: String,activity: Activity){
